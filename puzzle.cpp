@@ -70,20 +70,52 @@ int puzzle_2(const std::string &base_file_path) {
 
 int do_puzzle_1(std::ifstream &file) {
     std::string line;
+    uint64_t total_area = 0;
 
     while (std::getline(file, line)) {
-        fmt::println("{}", line);
+        std::string dim;
+        std::vector<uint64_t> dimensions{};
+        std::istringstream iss{line};
+
+        while (std::getline(iss, dim, 'x')) {
+            dimensions.push_back(std::stoul(dim));
+        }
+
+        std::ranges::sort(dimensions);
+
+        uint64_t area = 2 * dimensions[0] * dimensions[1];
+        area += 2 * dimensions[1] * dimensions[2];
+        area += 2 * dimensions[2] * dimensions[0];
+
+        area += dimensions[0] * dimensions[1];
+
+        total_area += area;
     }
 
-    return 0;
+    return total_area;
 }
 
 int do_puzzle_2(std::ifstream &file) {
     std::string line;
+    uint64_t total_area = 0;
 
     while (std::getline(file, line)) {
-        fmt::println("{}", line);
+        std::string dim;
+        std::vector<uint64_t> dimensions{};
+        std::istringstream iss{line};
+
+        while (std::getline(iss, dim, 'x')) {
+            dimensions.push_back(std::stoul(dim));
+        }
+
+        std::ranges::sort(dimensions);
+
+        uint64_t length = 2 * dimensions[0] + 2 * dimensions[1];
+
+        length += dimensions[0] * dimensions[1] * dimensions[2];
+
+        total_area += length;
     }
 
-    return 0;
+    return total_area;
 }
